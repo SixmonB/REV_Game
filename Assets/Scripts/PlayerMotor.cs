@@ -11,7 +11,7 @@ public class PlayerMotor : MonoBehaviour
     private bool isGrounded;
     public float jumpHeight = 3f;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         controller = GetComponent<CharacterController>();
     }

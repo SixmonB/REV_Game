@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Target : Interactable
 {
+    public GameObject PS_explosion;
+    private GameObject explosion;
     // Start is called before the first frame update
     void Start()
     {
-        
+        promptMessage = "Destroyed";
     }
 
     // Update is called once per frame
@@ -18,6 +20,9 @@ public class Target : Interactable
 
     protected override void Interact()
     {
-        Debug.Log("Interacted with " + gameObject.name);
+        explosion = Instantiate(PS_explosion, transform.position, Quaternion.identity);
+        explosion.transform.parent = transform.parent;
+        Debug.Log("Destroyed " + gameObject.name);
+        Destroy(gameObject);
     }
 }
