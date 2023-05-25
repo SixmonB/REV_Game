@@ -9,6 +9,7 @@ public class WorldGenerator : MonoBehaviour
     private GameObject targetInstance;
 
     public AudioClip spawnSound;
+    public AudioClip gunLoadSound;
     private AudioSource audioSource;
     private Color objectColor = Color.red;
     private float spawnSize = 30f;
@@ -27,6 +28,7 @@ public class WorldGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        Cursor.visible = false;
         Vector3 spawnPosition = new Vector3(0f,1.05f,0f); 
         player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
         audioSource = GetComponent<AudioSource>();
@@ -35,7 +37,10 @@ public class WorldGenerator : MonoBehaviour
         canvasInstance = Instantiate(canvas, Vector3.zero, Quaternion.identity);
         Transform child = canvasInstance.transform.Find("ScoreText");
         scoreText = child.GetComponent<TextMeshProUGUI>();
-        Debug.Log("text " + scoreText.text);
+        if (audioSource != null && gunLoadSound != null)
+        {
+            audioSource.PlayOneShot(gunLoadSound);
+        }
     }
 
     // Update is called once per frame
@@ -46,12 +51,12 @@ public class WorldGenerator : MonoBehaviour
         if(spawnTimer >= spawnInterval)
         {
             DestroyPrevious();
-            SpawnObject();
+            SpawnTarget();
             spawnTimer = 0f;
         }
     }
 
-    private void SpawnObject()
+    private void SpawnTarget()
     {
          Vector3 spawnPosition = transform.position + new Vector3(
             Random.Range(-spawnSize / 2f, spawnSize / 2f),
@@ -82,7 +87,6 @@ public class WorldGenerator : MonoBehaviour
     public void HandleScoreIncrease(int score)
     {
         // Process the score information received from the player
-        Debug.Log("Score increased: " + score);
         scoreText.text = "Score: " + score.ToString();
     }
 }

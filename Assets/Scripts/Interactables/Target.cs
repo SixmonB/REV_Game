@@ -22,7 +22,7 @@ public class Target : Interactable
     {
         explosion = Instantiate(PS_explosion, transform.position, Quaternion.identity);
         explosion.transform.parent = transform.parent;
-        Debug.Log("Destroyed " + gameObject.name);
+        //Debug.Log("Destroyed " + gameObject.name);
         Destroy(gameObject);
     }
 }

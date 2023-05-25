@@ -777,6 +777,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3993546996186525192, guid: e13b83c980b87804e84b6654c94de18d, type: 3}
+      propertyPath: gunLoadSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 550f661580c6b7c429aa9885e9bb9d77, type: 3}
     - target: {fileID: 3993546996186525193, guid: e13b83c980b87804e84b6654c94de18d, type: 3}
       propertyPath: m_Name
       value: GameManager

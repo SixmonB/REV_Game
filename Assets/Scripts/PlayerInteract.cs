@@ -13,11 +13,15 @@ public class PlayerInteract : MonoBehaviour
 
     private int score = 0;
 
+    public AudioClip gunShotSound;
+    private AudioSource audioSource;
+
     // Start is called before the first frame update
     void Awake()
     {
         cam = GetComponent<PlayerLook>().cam;
         input = GetComponent<InputManager>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -26,12 +30,18 @@ public class PlayerInteract : MonoBehaviour
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         Debug.DrawRay(ray.origin, ray.direction * distance);
         RaycastHit hitInfo; // variable storing collision information
-        if(Physics.Raycast(ray, out hitInfo, distance, mask))
+        if(input.onFoot.Shoot.triggered)
         {
-            if(hitInfo.collider.GetComponent<Interactable>() != null)
+            if (audioSource != null && gunShotSound != null)
             {
-                Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
-                if(input.onFoot.Shoot.triggered){
+                Debug.Log("gunshot");
+                audioSource.PlayOneShot(gunShotSound);
+            }
+            if(Physics.Raycast(ray, out hitInfo, distance, mask))
+            {     
+                if(hitInfo.collider.GetComponent<Interactable>() != null)
+                {
+                    Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
                     interactable.BaseInteract();
                     onHitTriggered();
                 }
